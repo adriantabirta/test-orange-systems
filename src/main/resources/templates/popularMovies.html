@@ -1,0 +1,62 @@
+<div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <div class="col-lg-10 mt-5 mb-5">
+            <table id="posts" class="table table-bordered table-responsive-sm">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cover</th>
+                    <th>Title</th>
+                    <th>Overview</th>
+                    <th>Votes</th>
+                    <th>Release</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="movie : ${movies.page}" style="cursor: pointer;" th:onclick="'javascript:rowClicked(\'' + ${movie.getId()} + '\');'">
+                    <td th:text="${movie.getId}">id</td>
+                    <td ><img style="width:200px;" th:src="@{https://image.tmdb.org/t/p/w500/{image}(image=${movie.getImageUrl()})}"/></td>
+                    <td th:text="${movie.getTitle()}">title</td>
+                    <td th:text="${movie.getOverview()}">body</td>
+                    <td th:text="${movie.getVoteCount()}">votes</td>
+                    <td th:text="${movie.getReleaseDate()}">12/12/2020</td>
+<!--                    <td th:text=${#temporals.format(movie.getReleaseDate(),'dd-MM-yyyy')}">release</td>-->
+
+
+                </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation" class="paging">
+                <ul class="pagination" th:if="${movies.page.totalPages > 1}">
+                    <li class="page-item" th:classappend="${!movies.paging.isPrevEnabled()? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{'/?page=' + ${movies.paging.pageNumber - 1}}"
+                           tabindex="-1">Previous</a>
+                    </li>
+                    <th:block th:each="item : ${movies.paging.getItems()}">
+                        <li class="page-item" th:classappend="${item.index == movies.paging.pageNumber? 'active' : ''}"
+                            th:if="${item.pageItemType.name() == 'PAGE'}">
+                            <a class="page-link" th:href="@{'/?page=' + ${item.index}}"
+                               th:text="${item.index}"></a>
+                        </li>
+                        <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                    </th:block>
+                    <li class="page-item" th:classappend="${!movies.paging.isNextEnabled()? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{'/?page=' + ${movies.paging.pageNumber + 1}}">Next</a>
+<!--                        -->
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function rowClicked(value) {
+        location.href = "/movies/" + value;
+    }
+</script>

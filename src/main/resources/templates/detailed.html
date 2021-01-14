@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Movies</title>
+
+    <link th:rel="stylesheet" th:href="@{../../webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Movies</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+
+<div class="container" style="text-align: center;">
+    <p> </p>
+    <img style="width:200px;" th:src="@{https://image.tmdb.org/t/p/w500/{image}(image=${movie.getImageUrl()})}"/>
+    <p></p>
+    <p>
+        <strong th:text="${movie.getTitle()}">Title</strong>
+    </p>
+    <p th:text="${movie.getOverview()}">Overview</p>
+    <p th:text="${movie.getVoteCount() + ' votes'}">Votes</p>
+    <p th:text="${'Release date: ' + movie.getReleaseDate()}">Date</p>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Movies</title>
+
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Movies</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs mt-5" id="myTabs">
+                <li class="nav-item"><a href="#tab1" data-url="/movies/popular" class="nav-link active">Popular Movies</a></li>
+                <li class="nav-item"><a href="#tab2" data-url="/movies/top-rated" class="nav-link">Top rated</a></li>
+            </ul>
+
+            <div class="tab-content pt-3">
+                <div class="tab-pane active" id="tab1"></div>
+                <div class="tab-pane" id="tab2"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr("data-url");
+        var href = this.hash;
+        var pane = $(this);
+
+        // ajax load from data-url
+        $(href).load(url, function (result) {
+            pane.tab('show');
+        });
+    });
+
+    // load first tab content
+    $('#tab1').load($('.nav-link.active').attr("data-url"), function (result) {
+    });
+
+</script>
+
+</body>
+</html>
